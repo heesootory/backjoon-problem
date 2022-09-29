@@ -82,9 +82,7 @@ public class Main {
         }
         // 실제 죽이기
         cnt += kill_list.size();
-//        System.out.println("size : " + cnt);
         for(Pair p : kill_list) {
-//            System.out.println(p.x + " " + p.y);
             new_map[p.x][p.y] = 0;
         }
     }
@@ -100,10 +98,8 @@ public class Main {
         for(int n = N; n > 0; n--){
             // 1. 궁수 공격 - bfs
             archer_play(n);
-//            print(new_map);
             // 2. 궁수 이동. - 배열 복사
             move(n);
-//            print(new_map);
         }
     }
 
@@ -111,7 +107,6 @@ public class Main {
         if(idx == 3){
             cnt = 0;
             play();
-//            System.out.println(cnt);
             max_cnt = Math.max(max_cnt, cnt);
             return;
         }
@@ -142,13 +137,5 @@ public class Main {
         Arrays.fill(map[N], 0);
         comb(0,0);
         System.out.println(max_cnt);
-    }
-
-    static void print(int[][] arr){
-        for(int[] i : arr){
-            for(int j : i) System.out.print(j +  " ");
-            System.out.println();
-        }
-        System.out.println();
     }
 }
