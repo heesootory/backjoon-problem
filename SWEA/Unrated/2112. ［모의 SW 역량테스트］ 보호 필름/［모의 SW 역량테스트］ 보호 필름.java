@@ -8,16 +8,6 @@ public class Solution {
     static int[][] test_arr;
     static int min = Integer.MAX_VALUE;
 
-    static void remove(int idx){
-        test_arr[idx] = arr[idx].clone();
-    }
-
-    static void inject(int idx, int value){
-        for(int j = 0; j < W; j++){
-            test_arr[idx][j] = value;
-        }
-    }
-
     static void test(int idx, int cnt){      // idx가 층을 뜻함. / cnt는 약품을 넣은 횟수.
         // 한 줄씩 약품이 K씩 있는지 확인..
         if(idx == D){
@@ -42,14 +32,11 @@ public class Solution {
         }
 
         test(idx + 1, cnt);      // 아무 약품 안넣고 다음 층으로
-
-        inject(idx, 0);     // a약품 넣어보기
+        Arrays.fill(test_arr[idx], 0);     // a약품 넣어보기
         test(idx + 1, cnt + 1);      // 다음 층으로
-
-        inject(idx, 1);     // b약품 넣어보기
+        Arrays.fill(test_arr[idx], 1);     // b약품 넣어보기
         test(idx + 1, cnt + 1);      // 다음 층으로
-
-        remove(idx);            // 원본으로 다시 복구
+        test_arr[idx] = arr[idx].clone();      // 원본으로 다시 복구
     }
 
     public static void main(String[] args) throws IOException {
