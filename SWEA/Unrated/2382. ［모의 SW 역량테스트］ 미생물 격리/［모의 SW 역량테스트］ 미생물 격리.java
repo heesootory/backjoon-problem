@@ -49,18 +49,12 @@ public class Solution {
         }
     }
     static void simulation(){
-        Queue<Corpes> queue = new LinkedList<>();
-        int s = manager.size();
-        for(int i = 0; i < s; i++) {
-            queue.add(manager.poll());
-        }
-
         while(true){        // 꺼내면서 이동과 합병 시작!
-            int len = queue.size();
+            int len = manager.size();
             visited = new int[N][N];
 
             for(int i = 0; i < len; i++){
-                Corpes c = queue.poll();
+                Corpes c = manager.poll();
 
                 // 좌표 이동.
                 c.x = c.x + dx[c.dir];
@@ -84,12 +78,6 @@ public class Solution {
             merge();
             M--;    // 시간 지남.
             if(M == 0) return;      // 격리시간 종료.
-            // 큐에 다시 집어넣어줌.
-            s = manager.size();
-            for(int i = 0; i < s; i++) {
-                queue.add(manager.poll());
-            }
-
         }
     }
 
