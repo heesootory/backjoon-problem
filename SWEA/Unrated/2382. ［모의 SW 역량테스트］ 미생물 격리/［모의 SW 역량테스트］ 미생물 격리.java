@@ -42,9 +42,7 @@ public class Solution {
                     }
                     Corpes new_corpes = new Corpes(i, j, sum, new_dir);
                     manager.add(new_corpes);        // 새로운 군집도 넣어주기.
-//                    System.out.println(manager.size());
                 }
-
             }
         }
     }
@@ -73,7 +71,6 @@ public class Solution {
                 visited[c.x][c.y]++;
                 manager.add(c);
             }
-//            print(visited);
             // 군집 병합.
             merge();
             M--;    // 시간 지남.
@@ -86,7 +83,7 @@ public class Solution {
         StringTokenizer st;
 
         int T = Integer.parseInt(br.readLine());
-        for(int t = 1; t <= T; t++) {
+        for (int t = 1; t <= T; t++) {
             st = new StringTokenizer(br.readLine());
 
             N = Integer.parseInt(st.nextToken());   // 맵의 크기
@@ -95,7 +92,7 @@ public class Solution {
 
             manager = new LinkedList<>();
             visited = new int[N][N];
-            for(int i = 0 ; i < K; i++){
+            for (int i = 0; i < K; i++) {
                 st = new StringTokenizer(br.readLine());
                 int row = Integer.parseInt(st.nextToken());
                 int col = Integer.parseInt(st.nextToken());
@@ -105,17 +102,9 @@ public class Solution {
             }
             simulation();
             int ans = 0;
-            for(Corpes c : manager) ans += c.num;
+            for (Corpes c : manager) ans += c.num;
 
             System.out.printf("#%d %d\n", t, ans);
         }
-    }
-
-    static void print(int[][] arr){
-        for(int[] i :arr){
-            for(int j : i) System.out.print(j + " ");
-            System.out.println();
-        }
-        System.out.println();
     }
 }
