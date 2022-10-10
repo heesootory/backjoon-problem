@@ -13,7 +13,6 @@ public class Solution{
 
     static int N, K;
     static int[][] arr;
-    static List<Pair> list;
     static int[] dx = {-1,1,0,0};
     static int[] dy = {0,0,-1,1};
     static int max;
@@ -21,34 +20,26 @@ public class Solution{
 
     static void dfs(Pair p, int len, boolean drill){
         if(len > max) max = len;
-
+        visited[p.x][p.y]  = true;
         for(int d = 0; d < 4; d++){
             int nx = p.x + dx[d];
             int ny = p.y + dy[d];
 
-            if(nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
-            if(visited[nx][ny]) continue;
+            if(nx < 0 || ny < 0 || nx >= N || ny >= N || visited[nx][ny]) continue;
 
-            if(arr[nx][ny] < arr[p.x][p.y]) {
-                visited[nx][ny] = true;
-                dfs(new Pair(nx, ny), len + 1, drill);
-                visited[nx][ny] = false;
-
-            }
+            if(arr[nx][ny] < arr[p.x][p.y]) dfs(new Pair(nx, ny), len + 1, drill);
             else{
                 if(drill) {
                     int cut = arr[nx][ny] - (arr[p.x][p.y] - 1);    // 가능한 최소로 커팅한 수치
                     if(cut <= K){
                         arr[nx][ny] -= cut;
-                        visited[nx][ny] = true;
                         dfs(new Pair(nx, ny), len + 1, false);
-                        visited[nx][ny] = false;
                         arr[nx][ny] += cut;
                     }
                 }
             }
-
         }
+        visited[p.x][p.y] = false;
     }
 
     public static void main(String[] args) throws Exception {
@@ -76,23 +67,12 @@ public class Solution{
                 }
             }
 
-            list = new ArrayList<>();
-
             for(int i = 0; i < N; i++){
                 for(int j = 0; j < N; j++){
-                    if(arr[i][j] == peek) list.add(new Pair(i, j));
+                    if(arr[i][j] == peek) dfs(new Pair(i, j), 1, true);
                 }
             }
-
-            for(Pair p : list) {
-                visited[p.x][p.y] = true;
-                dfs(p, 1, true);
-                visited[p.x][p.y] = false;
-            }
             System.out.printf("#%d %d\n", t, max);
-
-
-
         }
     }
 }
