@@ -3,7 +3,7 @@ import java.util.*;
 
 
 public class Main {
-    static int N, ans;
+    static int N;
     static int[] arr;
     static int[] dp;
 
@@ -12,22 +12,25 @@ public class Main {
         StringTokenizer st;
 
         N = Integer.parseInt(br.readLine());
-        arr = new int[N+1];
-        dp = new int[N+1];
+        arr = new int[N];
+        dp = new int[N];
 
         st = new StringTokenizer(br.readLine());
-        for(int i = 1; i < N+1; i++) arr[i] = Integer.parseInt(st.nextToken());
-        for(int i = 1; i < N+1; i++){
-            int max = 0;
-            for(int j = i; j >= 0; j--){
-                if(arr[j] < arr[i]){
-                    max = Math.max(max, dp[j]);
-                }
-            }
-            dp[i] = max+1;
-            ans = Math.max(ans, dp[i]);
+        for(int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken());
+
+        int size = 0;
+
+        for(int i = 0; i < N; i++){
+            int pos = Arrays.binarySearch(dp, 0, size, arr[i]);
+            if(pos >= 0) continue;
+
+            int insertPos = Math.abs(pos) - 1;
+            dp[insertPos] = arr[i];
+
+            if(insertPos == size) size++;
         }
-        System.out.println(ans);
+
+        System.out.println(size);
 
     }
 }
