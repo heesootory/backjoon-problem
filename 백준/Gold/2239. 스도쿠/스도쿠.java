@@ -21,14 +21,15 @@ public class Main {
     }
 
     static boolean check(Pair p, int n){
+        // 행, 열 탐색
         for(int j = 0; j < 9; j++){
             if(arr[p.x][j] == n) return false;
         }
-
         for(int i = 0 ; i < 9; i++){
             if(arr[i][p.y] == n) return false;
         }
 
+        // 3*3 칸 탐색
         int a = p.x / 3;
         int b = p.y / 3;
         for(int i = a*3; i < (a+1)*3; i++){
@@ -43,6 +44,7 @@ public class Main {
         if(flag) return;
         if(idx == list.size()){
             print();
+            // 사전순 가장 빠른 답을 찾았다면, true 
             flag = true;
             return;
         }
