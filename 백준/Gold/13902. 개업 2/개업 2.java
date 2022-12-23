@@ -14,8 +14,6 @@ public class Main {
             max_set = Math.max(max_set, sum);
             return;
         }
-
-
         for(int i = start; i < M; i++){
             comb(idx + 1, i + 1, end, sum + arr[i]);
         }
