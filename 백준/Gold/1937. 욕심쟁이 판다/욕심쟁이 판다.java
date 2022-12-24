@@ -5,7 +5,7 @@ public class Main {
 
     static int N;
     static int[][] arr;
-    static Integer[][] dp, memo;
+    static Integer[][] dp;
     static int[] dx = {-1,1,0,0};
     static int[] dy = {0,0,-1,1};
     static int dfs(int row, int col){
@@ -32,6 +32,7 @@ public class Main {
 
         N = Integer.parseInt(br.readLine());
         arr = new int[N][N];
+        dp = new Integer[N][N];
         for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
             for(int j = 0; j < N; j++){
@@ -39,10 +40,9 @@ public class Main {
             }
         }
         int max = 0;
-        dp = new Integer[N][N];
-        for(int i = 0 ; i< N; i++){
+        for(int i = 0 ; i < N; i++){
             for(int j = 0 ;j < N; j++){
-                max = Math.max(dfs(i,j), max);
+                max = Math.max(max, dfs(i,j));
             }
         }
         System.out.println(max);
