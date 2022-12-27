@@ -7,6 +7,7 @@ public class Main {
     static Long[][] dp;
     static long dfs(int idx, int num){
         if(num < 0) return 0;
+        if(idx <= 1) return num;
 
        if(dp[idx][num] != null) return dp[idx][num];
 
@@ -21,7 +22,8 @@ public class Main {
 
         T = Integer.parseInt(br.readLine());
         dp = new Long[11][2001];
-        for(int i = 0; i < 2001; i++) dp[1][i] = (long)i;
+        // dp배열의 초기화가 필요.
+//        for(int i = 0; i < 2001; i++) dp[1][i] = (long)i;
 
         for(int t = 0; t < T; t++){
             st = new StringTokenizer(br.readLine());
@@ -29,14 +31,6 @@ public class Main {
             M = Integer.parseInt(st.nextToken());
 
             System.out.println(dfs(N, M));
-
-//            for(int i = 1; i < N + 1; i++){
-//                for(int j = 1; j < M + 1; j++){
-//                    if(dp[i][j] == null) dp[i][j] = 0L;
-//                    System.out.print(dp[i][j] + " ");
-//                }
-//                System.out.println();
-//            }
 
         }
     }
