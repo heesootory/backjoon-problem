@@ -1,49 +1,51 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
+
+class Time implements Comparable<Time>{
+    int start, end;
+    public Time (int start, int end){
+        this.start = start;
+        this.end = end;
+    }
+
+    public int compareTo(Time t){
+        if(this.end == t.end) return this.start - t.start;
+        else return this.end - t.end;
+    }
+}
 
 public class Main{
-    static class meeting implements Comparable<meeting>{
-        int s, e;
-        meeting(int s, int e){
-            this.s = s;
-            this.e = e;
-        }
-        @Override
-        public int compareTo(meeting o){
-            // 시작시간이 작은것부터 오름차순, 시작시간이 같다면 끝나는 시간이 작은것 순으로 오름차순
-            if(this.e == o.e) return this.s - o.s;
-            else return this.e - o.e;
-        }
-    }
     static int N;
-    static Queue<meeting> queue;
+    static ArrayList<Time> timetable;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String args[]) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
 
         N = Integer.parseInt(br.readLine());
-        queue = new PriorityQueue<>();
+        timetable = new ArrayList<>();
 
         for(int i = 0; i < N; i++){
-            st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
-            queue.add(new meeting(start, end));
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int s = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
+
+            timetable.add(new Time(s, e));
         }
 
-        int cnt = 1;
-        int norm = queue.poll().e;
+        Collections.sort(timetable);
 
-        while(!queue.isEmpty()){
-            meeting m = queue.poll();
-            if(m.s >= norm){
+        int finalTime = 0;
+        int cnt = 0;
+        for(Time t : timetable){
+//            System.out.println(t.start + " " + t.end);
+            if(t.start >= finalTime) {
                 cnt++;
-                norm = m.e;
+                finalTime = t.end;
             }
         }
 
         System.out.println(cnt);
+
 
     }
 }
