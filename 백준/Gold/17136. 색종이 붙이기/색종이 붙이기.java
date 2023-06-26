@@ -1,79 +1,91 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 
-public class Main {
-    static class Pair{
-        int x, y;
-        Pair(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
-    }
-    static final int N = 10;
-    static int[][] arr;
-    static int[] paper_num;
-    static List<Pair> list;
-    static int min = Integer.MAX_VALUE;
 
-    static boolean possible(int x, int y, int size){
-        for(int i = x; i < x + size; i++){
-            for(int j = y; j < y + size; j++){
-                if(i < 0 || j < 0 || i >= N || j >= N) return false;
-                if(arr[i][j] != 1) return false;
+public class Main{
+    static final int size = 10;
+    static int[][] map;
+    static int[] paper_cnt = {0,5,5,5,5,5};
+    static int ans = 987654321;
+    static void dfs(int idx, int count){
+        if(count >= ans) return;
+        if(idx == 100) {
+            boolean flag = true;
+            for(int i = 0; i < size; i++){
+                for(int j = 0; j < size; j++){
+                    if(map[i][j] == 1) {
+                        flag = false; break;
+                    }
+                }
+                if(!flag) break;
             }
-        }
-        return (paper_num[size] > 0);
-    }
-
-    static void put(int x, int y, int size, int value){
-        int count = 0;
-        for(int i = x; i < x + size; i++){
-            for(int j = y; j < y + size; j++){
-                arr[i][j] = value;
-                count++;
-            }
-        }
-        if(value == 1) paper_num[size]++;
-        else paper_num[size]--;
-    }
-
-    static void dfs(int idx, int cnt){
-        if(idx == list.size()){
-            if(cnt < min) min = cnt;
+            if(flag) ans = Math.min(ans, count);
             return;
         }
 
-        Pair p = list.get(idx);
-        for(int size = 1; size <= 5; size++){
-            if(possible(p.x, p.y, size)){
-                put(p.x, p.y, size, 2);     // 붙이기
-                dfs(idx + 1, cnt + 1);
-                put(p.x, p.y, size, 1);     // 떼기
+        int x = idx / size;
+        int y = idx % size;
+
+        if(map[x][y] == 1){
+            boolean flag = true;
+            int len = 1;
+            for(int l = 2; l <= 5; l++){
+                for(int i = x; i < x + l; i++){
+                    for(int j = y; j < y + l; j++){
+                        if(i >= size || j >= size || map[i][j] == 0){
+                            flag = false; break;
+                        }
+                    }
+                    if(!flag) break;
+                }
+                if(!flag) break;
+                len = l;
+            }
+
+            // 색종이 갯수 카운트
+            for(int l = len; l >= 1; l--) {
+                if (paper_cnt[l] > 0) {
+                    // 색종이 붙이기
+                    paper_cnt[l]--;
+                    for (int i = x; i < x + l; i++) {
+                        for (int j = y; j < y + l; j++) {
+                            map[i][j] = 0;
+                        }
+                    }
+
+                    // 탐색
+                    dfs(idx + 1, count+1);
+
+                    // 색종이 떼기
+                    paper_cnt[l]++;
+                    for (int i = x; i < x + l; i++) {
+                        for (int j = y; j < y + l; j++) {
+                            map[i][j] = 1;
+                        }
+                    }
+                }
             }
         }
-        if(arr[p.x][p.y] != 1) dfs(idx + 1, cnt);
 
+        else dfs(idx + 1, count);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String args[]) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        paper_num = new int[]{0,5,5,5,5,5};
-        list = new ArrayList<>();
-        min = Integer.MAX_VALUE;
-        arr = new int[N][N];
+        map = new int[size][size];
 
-        for(int i = 0; i < N; i++){
+        for(int i = 0; i < size; i++){
             st = new StringTokenizer(br.readLine());
-            for(int j = 0 ; j < N; j++){
-                arr[i][j] = Integer.parseInt(st.nextToken());
-                if(arr[i][j] == 1) list.add(new Pair(i, j));
+            for(int j = 0; j < size; j++){
+                map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
+
         dfs(0, 0);
-        System.out.println((min == Integer.MAX_VALUE) ? -1 : min);
+        System.out.println(ans == 987654321 ? -1 : ans);
     }
 }
