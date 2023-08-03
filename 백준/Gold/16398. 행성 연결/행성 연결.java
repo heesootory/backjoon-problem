@@ -17,57 +17,60 @@ class Edge implements Comparable<Edge>{
 
 public class Main{
     static int N;
-    static int[][] arr;
-    static ArrayList<Edge>[] adjList;
+    static PriorityQueue<Edge> pq;
     static boolean[] visited;
+    static int[] dist;
+    static ArrayList<Edge>[] adjList;
 
-    static long Prim(int start){
-        long ans = 0;
+    static long Prim(Edge start){
+        long sum = 0;
+        int cnt = 0;
 
-        PriorityQueue<Edge> pq = new PriorityQueue<>();
-        pq.addAll(adjList[start]);
-        visited[start] = true;
-        int pick = 1;
+        pq.add(start);
+        dist[0] = 0;
 
-        while(pick < N){
-            Edge minEdge = pq.poll();
-            if(visited[minEdge.to]) continue;
+        while(!pq.isEmpty() || cnt < N){
+            Edge curr = pq.poll();
+            if(visited[curr.to]) continue;
 
-            visited[minEdge.to] = true;
-            pq.addAll(adjList[minEdge.to]);
-            ans += minEdge.weight;
-            pick++;
+            visited[curr.to] = true;
+            sum += dist[curr.to];
+            cnt++;
+
+            for(Edge edge : adjList[curr.to]){
+                if(!visited[edge.to] && dist[edge.to] > edge.weight){
+                    dist[edge.to] = edge.weight;
+                    pq.add(edge);
+                }
+            }
         }
 
-        return ans;
+        return sum;
 
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
         StringTokenizer st;
 
-        N = Integer.parseInt(br.readLine());
-        arr = new int[N][N];
-        adjList = new ArrayList[N + 1];
-        visited = new boolean[N + 1];
-        for(int i = 0; i < N + 1; i++) adjList[i] = new ArrayList<>();
+        pq = new PriorityQueue<>();
+        visited = new boolean[N];
+        dist = new int[N];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        adjList = new ArrayList[N];
+        for(int i = 0; i < N; i++) adjList[i] = new ArrayList<>();
 
         for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
-            for(int j = 0; j < N ; j++){
-                arr[i][j] = Integer.parseInt(st.nextToken());
-                if(i < j) {
-                    // 무향그래프로 인접리스트 만들어주기.
-                    Edge edge1 = new Edge(i + 1, j + 1, arr[i][j]);
-                    Edge edge2 = new Edge(j + 1, i + 1, arr[i][j]);
-                    adjList[i + 1].add(edge1);
-                    adjList[j + 1].add(edge2);
-                }
+            for(int j = 0; j < N; j++){
+                int weight = Integer.parseInt(st.nextToken());
+                adjList[i].add(new Edge(i, j, weight));
+                adjList[j].add(new Edge(j, i, weight));
             }
         }
 
-        System.out.println(Prim(1));
+        System.out.println(Prim(new Edge(-1,0,0)));
 
 
     }
