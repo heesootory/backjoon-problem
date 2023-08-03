@@ -26,8 +26,7 @@ public class Main{
 
                     // 입력받는 값을 넣어주는 방법. - 3개까지는 그냥 minHeap에 넣기
                     if (m > 3) {
-                        if(x > minHeap.peek()) minHeap.add(x);
-                        else if(x < maxHeap.peek()) maxHeap.add(x);
+                        if(x < maxHeap.peek()) maxHeap.add(x);
                         else minHeap.add(x);
                     }
                     else{
@@ -52,8 +51,6 @@ public class Main{
                 }
                 if(flag) break;
             }
-
-//            for(int i : list) System.out.print(i + " ");
             System.out.println();
 
         }
