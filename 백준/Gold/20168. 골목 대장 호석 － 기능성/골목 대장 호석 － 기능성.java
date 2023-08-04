@@ -9,7 +9,6 @@ class Edge implements Comparable<Edge>{
         this.a = a;
         this.b = b;
         this.c = c;
-        list.add(0);
     }
     @Override
     public int compareTo(Edge o){
@@ -39,9 +38,7 @@ public class Main{
                     Edge ee = new Edge(next.a, next.b, dist[next.b]);
                     ee.list.addAll(curr.list);
                     ee.list.add(next.c);
-                    if(shame[ee.b] > Collections.max(ee.list)) shame[ee.b] = Collections.max(ee.list);
-//                    for(int i : ee.list) System.out.print(i  + " ");
-//                    System.out.println();
+                    if(!ee.list.isEmpty() && shame[ee.b] > Collections.max(ee.list)) shame[ee.b] = Collections.max(ee.list);
                     pq.add(ee);
                 }
             }
