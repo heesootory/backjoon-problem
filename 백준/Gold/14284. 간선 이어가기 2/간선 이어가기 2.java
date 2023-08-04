@@ -22,13 +22,15 @@ public class Main{
     static boolean[] visited;
     static long[] dist;
 
-    static void Dijkstra(int start){
+    static void Dijkstra(int start, int end){
         PriorityQueue<Edge> pq = new PriorityQueue<>();
         pq.add(new Edge(-1, start, 0));
         dist[start] = 0;
 
         while(!pq.isEmpty()){
             Edge curr = pq.poll();
+
+            if(curr.to == end) break;
 
             if(visited[curr.to]) continue;
             visited[curr.to] = true;
@@ -70,7 +72,7 @@ public class Main{
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        Dijkstra(start);
+        Dijkstra(start, end);
         System.out.println(dist[end]);
     }
 }
