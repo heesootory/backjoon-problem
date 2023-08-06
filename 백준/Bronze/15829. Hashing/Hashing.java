@@ -18,7 +18,7 @@ public class Main{
             ans = (int)((ans + ar) % mod);
         }
 
-        System.out.println(ans);
+        System.out.println(ans % mod);
 
     }
 }
