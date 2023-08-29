@@ -3,11 +3,9 @@ import java.util.*;
 
 
 public class Main {
-
     static int N, M, K;
     static int[] arr;
     static long[][] dp;
-
     static long cal(int n, int m){
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
@@ -29,14 +27,13 @@ public class Main {
 
         arr = new int[N + 1];
         dp = new long[N + 1][M + 1];
+        for(int i = 1; i < N + 1; i++) Arrays.fill(dp[i], Long.MAX_VALUE);
 
         for(int i = 1; i < N + 1; i++) arr[i] = Integer.parseInt(br.readLine());
 
         for(int i = 1; i < N + 1; i++){
             for(int j = 1; j < M + 1; j++){
-                if(i < j){
-                    dp[i][j] = cal(i ,i);
-                }
+                if(i < j) break;
                 else{
                     long min = Long.MAX_VALUE;
                     for(int k = 1; k < M + 1; k++) min = Math.min(min, dp[i - j][k]);
@@ -46,13 +43,6 @@ public class Main {
                 }
             }
         }
-
-//        for(int i = 0 ; i < N + 1; i++){
-//            for(int j = 0; j < M + 1; j++){
-//                System.out.print(dp[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
 
         long ans = Long.MAX_VALUE;
         for(int i = 1; i < M + 1; i++) ans = Math.min(ans, dp[N][i]);
