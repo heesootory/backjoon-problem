@@ -7,14 +7,14 @@ public class Main {
     static int[] arr;
     static long[][] dp;
     static long cal(int n, int m){
-        int max = 0;
+        int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
         for(int i = n; i > n - m; i--){
             max = Math.max(max, arr[i]);
             min = Math.min(min, arr[i]);
         }
 
-        return K + (long)m * (max - min);
+        return K + ((long)m) * (max - min);
     }
 
     public static void main(String[] args) throws IOException {
