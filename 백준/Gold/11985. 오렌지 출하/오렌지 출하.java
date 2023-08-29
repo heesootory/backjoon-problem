@@ -7,7 +7,7 @@ public class Main {
     static int[] arr;
     static long[][] dp;
     static long cal(int n, int m){
-        int max = Integer.MIN_VALUE;
+        int max = 0;
         int min = Integer.MAX_VALUE;
         for(int i = n; i > n - m; i--){
             max = Math.max(max, arr[i]);
@@ -34,13 +34,12 @@ public class Main {
         for(int i = 1; i < N + 1; i++){
             for(int j = 1; j < M + 1; j++){
                 if(i < j) break;
-                else{
-                    long min = Long.MAX_VALUE;
-                    for(int k = 1; k < M + 1; k++) min = Math.min(min, dp[i - j][k]);
-                    long parcel = cal(i, j);
 
-                    dp[i][j] = min + parcel;
-                }
+                long min = Long.MAX_VALUE;
+                for(int k = 1; k < M + 1; k++) min = Math.min(min, dp[i - j][k]);
+                long parcel = cal(i, j);
+
+                dp[i][j] = min + parcel;
             }
         }
 
