@@ -8,8 +8,9 @@ public class Main {
     static int[][] price_arr;
     static int[][][] dp;
     static int dfs(int idx, int color, int start){
-        if(idx == N) {
-            return (color == start) ? 0 : INF;
+        if(idx == N - 1) {
+            // 마지막 색 선택
+            return (color == start) ? INF : price_arr[idx][color];
         }
 
         if(dp[idx][color][start] != -1) return dp[idx][color][start];
