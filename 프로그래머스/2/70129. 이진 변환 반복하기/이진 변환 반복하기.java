@@ -8,7 +8,6 @@ class Solution {
         
         while( !s.equals("1")){
             
-            
             int one_cnt = 0;
             
             for(int i = 0; i < s.length(); i++) {
