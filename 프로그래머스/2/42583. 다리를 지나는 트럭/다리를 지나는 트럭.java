@@ -1,42 +1,56 @@
 import java.util.*;
 
+class Truck{
+    int weight, move;
+    
+    public Truck(int weight){
+        this.weight = weight;
+        this.move = 1;
+    }
+    
+    public void moving(){
+        this.move++;
+    }
+}
 class Solution {
-    static Queue<Integer> queue = new LinkedList<>();
     
     public int solution(int bridge_length, int weight, int[] truck_weights) {
+        Queue<Truck> waitQ = new LinkedList<>();
+        Queue<Truck> moveQ = new LinkedList<>();
+        
+        // 모든 트럭을 대기큐에 삽입.
+        for(int i : truck_weights) waitQ.add(new Truck(i));
+        
         int time = 0;
-        int next = 0;
-        int sum = 0;
-        int total_truck = truck_weights.length;
+        int total_weight = 0;
         
-        while(true){
-        
-            int len = queue.size();
+        while(!moveQ.isEmpty() || !waitQ.isEmpty()){
             
-            // 다리에서 내려오는 경우.
-            if(len == bridge_length){
-                if(sum == 0) break;
-                
-                int out = queue.poll();
-                sum -= out;
-                len--;
+            time++;     // 0초에는 아무 행동도 안하고 넘어갔음. 1초부터 진입시작. 
+            
+            // 첫 회 - 다리에 아무것도 없을 때
+            if(moveQ.isEmpty()){
+                Truck enter = waitQ.poll();
+                total_weight += enter.weight;
+                moveQ.add(enter);
+                continue;
             }
             
-            if(next < total_truck){
-                if(len < bridge_length){
-                    if(sum + truck_weights[next] <= weight){    // 다리에 트럭이 올라올 수 있는 경우
-                        queue.add(truck_weights[next]);
-                        sum += truck_weights[next];
-                        next++;
-                    }
-                    else queue.add(0);
-                }
+            // 모든 다리에 있는 트럭들 이동.
+            for(Truck t : moveQ) t.move++;
+            
+            // 다리를 다 지난 트럭들 빼기. - 이동되어 다리길이를 초과한 트럭들 발생.
+            if(moveQ.peek().move > bridge_length){
+                Truck out = moveQ.poll();
+                total_weight -= out.weight;
             }
-            else queue.add(0);
             
-            time++;
-            
-            // System.out.println("시간 : " + time +  " / " + queue.toString());
+            // 다음 트럭이 올라갈 수 있다면 진입.
+            if(!waitQ.isEmpty() && waitQ.peek().weight + total_weight <= weight){
+                Truck enter = waitQ.poll();
+                total_weight += enter.weight;
+                moveQ.add(enter);
+            }
         }
         
         return time;
