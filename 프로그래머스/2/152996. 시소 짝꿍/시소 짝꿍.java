@@ -1,7 +1,7 @@
 import java.util.*;
 
 class Solution {
-    static double[] mulArr = {1.0, 2.0, 3/2.0, 4/3.0};
+    static double[] mulArr = {1.0, 2.0, 3/2.0, 4/3.0, 1/2.0, 3/4.0, 3/2.0};
     public long solution(int[] weights) {
         long answer = 0;
         
@@ -16,18 +16,14 @@ class Solution {
                 double key = i * d;     // 짝 몸무게
                 double n = map.getOrDefault((double)i, 0);     // 현재 몸무게에 해당하는 사람들
                 
-                if(d == 1.0 && n != 0) {
-                    n--;
-                    answer += map.getOrDefault(key, 0) * n / 2;
-                }
-                else{
-                    answer += map.getOrDefault(key, 0) * n;
-                }
+                if(d == 1.0 && n != 0) n--;
+                answer += map.getOrDefault(key, 0) * n;
+                
             }
             // double curr = i * 1.0;
             // map.put(curr, map.getOrDefault(curr, 0) + 1);
         }
         
-        return answer;
+        return answer/2;
     }
 }
