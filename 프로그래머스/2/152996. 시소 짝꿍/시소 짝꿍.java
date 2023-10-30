@@ -1,20 +1,31 @@
 import java.util.*;
 
 class Solution {
-    static Double[] mulArr = {1.0, 2.0, 3/2.0, 4/3.0};
+    static double[] mulArr = {1.0, 2.0, 3/2.0, 4/3.0};
     public long solution(int[] weights) {
         long answer = 0;
         
-        Arrays.sort(weights);
+        // Arrays.sort(weights);
         Map<Double, Integer> map = new HashMap<>();
+        for(double i : weights) map.put(i, map.getOrDefault(i, 0) + 1);
         
-        for(int i = weights.length - 1; i >= 0; i--){
-            for(Double d : mulArr){
-                Double key = weights[i] * d;
-                if(map.containsKey(key)) answer += map.get(key);
+        System.out.print(map.get(100.0));
+        
+        for(int i = 1000; i >= 100; i--){
+            for(double d : mulArr){
+                double key = i * d;     // 짝 몸무게
+                double n = map.getOrDefault((double)i, 0);     // 현재 몸무게에 해당하는 사람들
+                
+                if(d == 1.0 && n != 0) {
+                    n--;
+                    answer += map.getOrDefault(key, 0) * n / 2;
+                }
+                else{
+                    answer += map.getOrDefault(key, 0) * n;
+                }
             }
-            Double curr = weights[i] * 1.0;
-            map.put(curr, map.getOrDefault(curr, 0) + 1);
+            // double curr = i * 1.0;
+            // map.put(curr, map.getOrDefault(curr, 0) + 1);
         }
         
         return answer;
