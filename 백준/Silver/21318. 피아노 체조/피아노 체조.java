@@ -1,33 +1,34 @@
-import java.io.*;
 import java.util.*;
-
+import java.io.*;
 
 
 public class Main{
     static int N;
-    static int[] arr;
-
-    static int[] cntArr;
-
-    public static void main(String[] args) throws IOException {
-
+    static int[] score;
+    static int[] sumArr;
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        N = Integer.parseInt(br.readLine());
-        arr = new int[N];
-        cntArr = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i = 0 ; i < N; i++){
-            arr[i] = Integer.parseInt(st.nextToken());
-            if(i > 0) cntArr[i] = (arr[i - 1] > arr[i]) ? cntArr[i - 1] +1 : cntArr[i - 1];
+
+        N = Integer.parseInt(st.nextToken());
+        score = new int[N + 1];
+        sumArr = new int[N + 1];
+        st = new StringTokenizer(br.readLine());
+        for(int i = 1; i < N + 1; i++) {
+            score[i] = Integer.parseInt(st.nextToken());
+            sumArr[i] = (score[i - 1] > score[i]) ? sumArr[i - 1] + 1 : sumArr[i - 1];
         }
 
         int Q = Integer.parseInt(br.readLine());
-        for(int i = 0 ;i < Q; i++){
+
+        for(int q = 0; q < Q; q++) {
             st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken()) - 1;
-            int y = Integer.parseInt(st.nextToken()) - 1;
-            System.out.println(cntArr[y] - cntArr[x]);
+            int from = Integer.parseInt(st.nextToken());
+            int to = Integer.parseInt(st.nextToken());
+
+            System.out.println(sumArr[to] - sumArr[from]);
+
         }
     }
+
 }
