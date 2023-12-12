@@ -26,7 +26,6 @@ public class Main{
         }
 
         dp = new int[N + 1][K + 1];
-        for(int i = 1; i < N + 1; i++) Arrays.fill(dp[i], -1);
 
         for(int i = 1; i < N + 1; i++){
             for(int j = 0; j < K + 1; j++){
