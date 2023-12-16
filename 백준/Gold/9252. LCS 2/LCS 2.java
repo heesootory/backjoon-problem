@@ -6,17 +6,6 @@ public class Main{
     static String str1, str2;
     static int[][] dp;
     static Stack<Character> stack;
-    static int dfs(int idx, int i, int j){
-        if(i <= 0 || j <= 0) return 0;
-
-        int cache = dp[i][j];
-        if(cache != -1) return cache;
-
-        if(str1.charAt(i - 1) == str2.charAt(j - 1)) {
-            return dp[i][j] = dfs(idx + 1, i - 1, j - 1) + 1;
-        }
-        else return dp[i][j] = Math.max(dfs( idx, i - 1, j), dfs(idx, i, j - 1));
-    }
 
     static void getString(int i, int j){
         stack = new Stack<>();
@@ -42,12 +31,12 @@ public class Main{
         dp = new int[len1 + 1][len2 + 1];
         for(int i = 1; i < len1 + 1; i++){
             for(int j = 1; j < len2 + 1; j++){
-                dp[i][j] = -1;
+                if(str1.charAt(i - 1) == str2.charAt(j - 1)) dp[i][j] = dp[i-1][j-1] + 1;
+                else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
             }
         }
 
-        System.out.println(dfs(0, len1, len2));
-
+        System.out.println(dp[len1][len2]);
         getString(len1, len2);
 
         while(!stack.isEmpty()){
