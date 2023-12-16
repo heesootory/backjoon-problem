@@ -6,7 +6,6 @@ public class Main{
     static String str1, str2;
     static int[][] dp;
     static Stack<Character> stack;
-
     static void getString(int i, int j){
         stack = new Stack<>();
 
@@ -19,7 +18,6 @@ public class Main{
             }
         }
     }
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
