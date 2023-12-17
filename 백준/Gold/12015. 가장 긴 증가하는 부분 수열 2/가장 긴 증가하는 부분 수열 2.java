@@ -31,15 +31,14 @@ public class Main{
             int len = ansList.size();
             if(len == 0) ansList.add(num);
             else{
+                // 마지막 원소보다 큰 수 라면, 뒤에 그냥 추가.
                 if(num > ansList.get(len - 1)) ansList.add(num);
-                else{
+                else{       // 그게 아니라면, 리스트 내에서 lower_bound를 찾아 바꾸기.
                     ansList.set(lower_bound(num), num);
                 }
             }
         }
 
-//        for(int i : ansList) System.out.print(i + " ");
-//        System.out.println();
         System.out.println(ansList.size());
 
     }
