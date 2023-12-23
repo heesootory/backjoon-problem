@@ -34,7 +34,7 @@ public class Main{
                 visited[sun1] = true;
                 sun1 = parents[sun1];
             }
-            
+
             while(true) {
                 if(visited[sun2]){
                     Ans = sun2;
@@ -43,7 +43,7 @@ public class Main{
 
                 sun2 = parents[sun2];
             }
-            
+
             System.out.println(Ans);
 
 

@@ -4,11 +4,15 @@
 
 ### 성능 요약
 
-메모리: 24128 KB, 시간: 252 ms
+메모리: 22384 KB, 시간: 208 ms
 
 ### 분류
 
 깊이 우선 탐색, 그래프 이론, 그래프 탐색, 최소 공통 조상, 트리
+
+### 제출 일자
+
+2023년 7월 31일 16:32:31
 
 ### 문제 설명
 
@@ -18,7 +22,7 @@
 	<li>두 노드의 가장 가까운 공통 조상은, 두 노드를 모두 자손으로 가지면서 깊이가 가장 깊은(즉 두 노드에 가장 가까운) 노드를 말합니다.</li>
 </ul>
 
-<p style="text-align:center"><img alt="nca.png" src="https://upload.acmicpc.net/4f2eae58-31bf-445f-a7a3-625505e7102c/-/preview/" style="height:278px; width:304px"></p>
+<p style="text-align:center"><img alt="nca.png" src="" style="height:278px; width:304px"></p>
 
 <p>예를 들어  15와 11를 모두 자손으로 갖는 노드는 4와 8이 있지만, 그 중 깊이가 가장 깊은(15와 11에 가장 가까운) 노드는 4 이므로 가장 가까운 공통 조상은 4가 됩니다.</p>
 
