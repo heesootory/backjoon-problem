@@ -1,6 +1,16 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * 무방향 그래프가 아닐 경우 반례
+ * 3
+ * 2 1
+ * 3 1
+ *
+ * 정답 : 1
+ * 출력 : 0
+ */
+
 public class Main{
     static int N;
     static ArrayList<Integer>[] adjList;
@@ -31,7 +41,7 @@ public class Main{
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
             adjList[u].add(v);
-            adjList[v].add(u);
+            adjList[v].add(u);      // u가 v의 부모라는 말이 없으므로, 양쪽 넣어주어 무방향 그래프로 꼭 만들어 줘야함.
         }
 
         dfs(1, -1);
