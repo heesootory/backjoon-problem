@@ -6,7 +6,7 @@ public class Main{
     static int[] candy, parents;
     static int[][] groupInfo, dp;
     static ArrayList<Integer> groupList;
-    static void make(){
+    static void init(){
         for(int i = 0; i < N + 1; i++){
             parents[i] = i;
         }
@@ -15,15 +15,26 @@ public class Main{
         if(parents[a] == a) return a;
         return parents[a] = find(parents[a]);
     }
-    static boolean union(int a, int b){
+    static void union(int a, int b){
         int aRoot = find(a);
         int bRoot = find(b);
 
-        if(aRoot == bRoot) return false;
+        if(aRoot == bRoot) return;
+        parents[bRoot] = aRoot;
+    }
 
-        if(bRoot < aRoot) parents[aRoot] = bRoot;
-        else parents[bRoot] = aRoot;
-        return true;
+    static void makeGroup(){        // 그룹 정보 만들기.
+        groupList = new ArrayList<>();
+        for(int i = 1; i < N + 1; i++){
+            parents[i] = find(i);
+            if(parents[i] == i) groupList.add(i);
+        }
+
+        groupInfo = new int[2][N + 1];      // [0]아이 수, [1]사탕 수
+        for(int i = 1; i < N + 1; i++){
+            groupInfo[0][parents[i]]++;
+            groupInfo[1][parents[i]] += candy[i];
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -42,8 +53,7 @@ public class Main{
             candy[i] = Integer.parseInt(st.nextToken());
         }
 
-        make();
-
+        init();
         for(int i = 0; i < M; i++){
             st = new StringTokenizer(br.readLine());
             int num1 = Integer.parseInt(st.nextToken());
@@ -51,17 +61,7 @@ public class Main{
             union(num1, num2);
         }
 
-        groupList = new ArrayList<>();
-        for(int i = 1; i < N + 1; i++){
-            parents[i] = find(i);
-            if(parents[i] == i) groupList.add(i);
-        }
-
-        groupInfo = new int[2][N + 1];      // [0]아이 수, [1]사탕 수
-        for(int i = 1; i < N + 1; i++){
-            groupInfo[0][parents[i]]++;
-            groupInfo[1][parents[i]] += candy[i];
-        }
+        makeGroup();
 
         // dp
         int len = groupList.size();
