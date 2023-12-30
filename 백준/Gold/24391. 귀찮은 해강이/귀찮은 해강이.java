@@ -37,7 +37,6 @@ public class Main{
             int num1 = Integer.parseInt(st.nextToken());
             int num2 = Integer.parseInt(st.nextToken());
             union(num1, num2);
-            union(num2, num1);
         }
 
 //        print(building);
