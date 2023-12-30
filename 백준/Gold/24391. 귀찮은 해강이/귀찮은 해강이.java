@@ -11,15 +11,11 @@ public class Main{
         if(building[a] == a) return a;
         return building[a] = find(building[a]);
     }
-    static boolean union(int a, int b){
+    static void union(int a, int b){
         int aRoot = find(a);
         int bRoot = find(b);
 
-        if(aRoot == bRoot) return false;
-
-        if(bRoot < aRoot) building[aRoot] = bRoot;
-        else building[bRoot] = aRoot;
-        return true;
+        building[bRoot] = aRoot;
     }
 
     public static void main(String[] args) throws IOException {
@@ -39,8 +35,6 @@ public class Main{
             union(num1, num2);
         }
 
-//        print(building);
-
         int ans = 0;
         int curr = 0;
         st = new StringTokenizer(br.readLine());
@@ -51,8 +45,4 @@ public class Main{
         }
         System.out.println(ans - 1);
     }
-//    static void print(int[] arr){
-//        for(int i : arr) System.out.print(i + " ");
-//        System.out.println();
-//    }
 }
