@@ -3,9 +3,11 @@ import java.util.*;
 
 class Pair{
     int x, y;
-    public Pair(int x, int y){
+    int cnt;
+    public Pair(int x, int y, int cnt){
         this.x = x;
         this.y = y;
+        this.cnt = cnt;
     }
 }
 public class Main {
@@ -30,12 +32,10 @@ public class Main {
             }
         }
 
-        BFS(new Pair(0, 0));
-        System.out.println(field[N-1][M-1]);
+        System.out.println(BFS(new Pair(0, 0, 1)));
     }
 
-    static void BFS(Pair p) {
-        int cnt = 0;
+    static int BFS(Pair p) {
         Queue<Pair> queue = new LinkedList<>();
         boolean[][] visited = new boolean[N][M];
         queue.offer(p);
@@ -43,8 +43,7 @@ public class Main {
 
         while (!queue.isEmpty()) {
             Pair curr = queue.poll();
-            cnt++;
-            if (curr.x == N - 1 && curr.y == M - 1) return;
+            if (curr.x == N - 1 && curr.y == M - 1) return curr.cnt;
 
             for (int d = 0; d < 4; d++) {
                 int nx = curr.x + dx[d];
@@ -56,9 +55,10 @@ public class Main {
 
                 visited[nx][ny] = true;
                 field[nx][ny] = field[curr.x][curr.y] + 1;
-                queue.offer(new Pair(nx, ny));
+                queue.offer(new Pair(nx, ny, curr.cnt + 1));
             }
         }
+        return 0;
     }
 }
 
